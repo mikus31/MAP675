@@ -50,8 +50,7 @@
         }).addTo(map);*/
         $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/atlanta-urban.json')).done(function (cityLimits, neighborhoods, transitRoutes, urbanAreas) {
             drawMap(cityLimits, neighborhoods, transitRoutes, urbanAreas);
-        });
-
+        }); // had to update my paths slightly here, but an easy adjustment to make
         function drawMap(cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
             L.geoJson(urbanAreasData, {
                 style: urbanOptions
@@ -89,7 +88,7 @@
                     // assign options
                     return type === 'SUBWAY' ? subwayOptions : type === 'Bus' ? busOptions : type === 'TRAM' ? tramOptions : otherRoutes;
                 }
-            }).addTo(map);
+            }).addTo(map); // hey this is a nice-looking map!
         }
         map.createPane('labels');
         map.getPane('labels').style.zIndex = 650;
@@ -106,7 +105,7 @@
             fillOpacity: 0
             , color: 'black'
             , opacity: 1
-            , weight: 5
+            , weight: 5 // bumped this up a notch to differentiate from other linework
         };
         var neighborhoodOptions = {
             fillOpacity: .3
