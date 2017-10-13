@@ -15,6 +15,7 @@
         }
     </style>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -36,6 +37,16 @@
             , subdomains: 'abcd'
             , maxZoom: 19
         }).addTo(map);
+        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/urban-areas.json')).done(function (cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
+            //  note that we can access the GeoJSON data here
+            // console.log(cityLimitsData);
+        });
+        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/urban-areas.json')).done(function (cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
+            L.geoJson(cityLimitsData).addTo(map);
+            L.geoJson(neighborhoodsData).addTo(map);
+            L.geoJson(transitRoutesData).addTo(map);
+            L.geoJson(urbanAreasData).addTo(map);
+        });
     </script>
 </body>
 
