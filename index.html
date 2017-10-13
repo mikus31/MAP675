@@ -13,41 +13,44 @@
             width: 100%;
             top: 0;
             bottom: 0;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, .75);
         }
     </style>
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>
         var options = {
             center: [33.726, -84.365]
-            , zoom: 11
-            , minZoom: 10
+            , zoom: 9
+            , minZoom: 9
             , maxZoom: 16
             , maxBounds: [
-        [33.911, -84.032]
-        , [33.620, -84.772]
-    ]
+                [33.911, -84.032]
+                , [33.620, -84.772]
+            ]
         };
         var map = L.map('map', options);
-        L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+        /*L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
             , subdomains: 'abcd'
             , maxZoom: 19
-        }).addTo(map);
-        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods-filtered3.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/atlanta-urban.json')).done(function (cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
-            //  note that we can access the GeoJSON data here
-            // console.log(cityLimitsData);
+        }).addTo(map);*/
+        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/atlanta-urban.json')).done(function (cityLimits, neighborhoods, transitRoutes, urbanAreas) {
+            drawMap(cityLimits, neighborhoods, transitRoutes, urbanAreas);
         });
-        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods-filtered3.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/atlanta-urban.json')).done(function (cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
+
+        function drawMap(cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
             L.geoJson(cityLimitsData).addTo(map);
             L.geoJson(neighborhoodsData).addTo(map);
             L.geoJson(transitRoutesData).addTo(map);
             L.geoJson(urbanAreasData).addTo(map);
-        });
+        }
     </script>
 </body>
 
