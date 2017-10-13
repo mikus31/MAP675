@@ -46,10 +46,58 @@
         });
 
         function drawMap(cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
-            L.geoJson(cityLimitsData).addTo(map);
-            L.geoJson(neighborhoodsData).addTo(map);
-            L.geoJson(transitRoutesData).addTo(map);
-            L.geoJson(urbanAreasData).addTo(map);
+            L.geoJson(urbanAreasData, {
+                style: urbanOptions
+            }).addTo(map);
+            L.geoJson(cityLimitsData, {
+                style: cityLimitsOptions
+            }).addTo(map);
+            L.geoJson(neighborhoodsData, {
+                style: neighborhoodOptions
+            }).addTo(map);
+            L.geoJson(transitRoutesData, {
+                // style each feature
+                style: function (feature) {
+                    // shortcut to variable
+                    var type = feature.properties.type;
+                    // assign options
+                    return type === 'SUBWAY' ? subwayOptions : type === 'Bus' ? busOptions : type === 'TRAM' ? tramOptions : otherRoutes;
+                }
+            }).addTo(map);
+        }
+        var urbanOptions = {
+            color: '#295b97'
+            , weight: 0
+        }
+        var cityLimitsOptions = {
+            fillOpacity: 0
+            , color: 'black'
+            , opacity: 1
+            , weight: 5
+        };
+        var neighborhoodOptions = {
+            fillOpacity: .3
+            , fillColor: '#e0ecf9'
+            , color: '#151f2b'
+            , weight: 1.7
+            , opacity: 1
+        };
+        var subwayOptions = {
+            color: '#ff6e00'
+            , weight: 2
+            , opacity: 1
+        }
+        var busOptions = {
+            color: '#f0f062'
+            , weight: .1
+            , opacity: 1
+        }
+        var tramOptions = {
+            color: '#ff6e00'
+            , weight: 2
+        }
+        var otherRoutes = {
+            color: '#ff6e00'
         }
     </script>
 </body>
