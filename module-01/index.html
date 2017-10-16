@@ -43,24 +43,28 @@
             ]
         };
         var map = L.map('map', options);
-        /*L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-            , subdomains: 'abcd'
-            , maxZoom: 19
-        }).addTo(map);*/
-        $.when($.getJSON('module-01/data/city-limits.json'), $.getJSON('module-01/data/neighborhoods.json'), $.getJSON('module-01/data/transit-routes.json'), $.getJSON('module-01/data/atlanta-urban.json')).done(function (cityLimits, neighborhoods, transitRoutes, urbanAreas) {
+
+        $.when($.getJSON('./data/city-limits.json'), 
+               $.getJSON('./data/neighborhoods.json'), 
+               $.getJSON('./data/transit-routes.json'), 
+               $.getJSON('./data/atlanta-urban.json'))
+        .done(function (cityLimits, neighborhoods, transitRoutes, urbanAreas) {
             drawMap(cityLimits, neighborhoods, transitRoutes, urbanAreas);
         }); // had to update my paths slightly here, but an easy adjustment to make
+        
         function drawMap(cityLimitsData, neighborhoodsData, transitRoutesData, urbanAreasData) {
+            
             L.geoJson(urbanAreasData, {
                 style: urbanOptions
             }).addTo(map);
+            
             L.geoJson(cityLimitsData, {
                 style: cityLimitsOptions
             }).addTo(map);
+            
             L.geoJson(neighborhoodsData, {
-                style: neighborhoodOptions
-                , onEachFeature: function (feature, layer) {
+                style: neighborhoodOptions, 
+                onEachFeature: function (feature, layer) {
                     // shortut to variable
                     var tooltip = feature.properties.NAME;
                     // bind the tooltip to the layer
@@ -80,6 +84,7 @@
                     });
                 }
             }).addTo(map);
+            
             L.geoJson(transitRoutesData, {
                 // style each feature
                 style: function (feature) {
